@@ -3,7 +3,7 @@
 // Firebase Imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-import { firebaseConfig } from "./firebase-config.js";
+import { firebaseConfig, isFirebaseConfigured } from "./firebase-config.js";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -67,18 +67,43 @@ function showDashboard() {
     loadApplications();
 }
 
-// Load Applications from Firebase
+// Load Applications
 function loadApplications() {
-    const appsRef = ref(db, 'applications');
+    // HYBRID MODE: Check configuration
+    if (isFirebaseConfigured()) {
+        // --- ONLINE MODE (Firebase) ---
+        const appsRef = ref(db, 'applications');
 
-    // Real-time listener
-    onValue(appsRef, (snapshot) => {
-        const data = snapshot.val();
+        onValue(appsRef, (snapshot) => {
+            const data = snapshot.val();
+            processData(data, 'online');
+        }, (error) => {
+            console.error("Error fetching data:", error);
+            alert("Error fetching data from Firebase: " + error.message);
+        });
+    } else {
+        // --- OFFLINE MODE (LocalStorage) ---
+        try {
+            const localData = JSON.parse(localStorage.getItem('bmcc_applications') || '[]');
+            // Convert array to object-like structure for consistency
+            const data = {};
+            localData.forEach((app, index) => {
+                data[`local_${index}`] = app;
+            });
+            processData(data, 'offline');
+        } catch (e) {
+            console.error("Error loading local data", e);
+            applications = [];
+            renderTable();
+        }
+    }
+
+    function processData(data, mode) {
         if (data) {
-            // Convert object to array and store Firebase key
             applications = Object.entries(data).map(([key, value]) => ({
                 firebaseKey: key,
-                ...value
+                ...value,
+                source: mode
             }));
         } else {
             applications = [];
@@ -90,10 +115,13 @@ function loadApplications() {
         filteredApplications = [...applications];
         updateStatistics();
         renderTable();
-    }, (error) => {
-        console.error("Error fetching data:", error);
-        alert("Error fetching data from Firebase: " + error.message);
-    });
+
+        // Show mode indicator
+        const headerText = document.querySelector('.header-text p');
+        if (headerText) {
+            headerText.innerHTML = `Manage & View Applications <span style="font-size:10px; background:${mode === 'online' ? '#10b981' : '#f59e0b'}; color:white; padding:2px 6px; border-radius:4px; margin-left:5px;">${mode.toUpperCase()} MODE</span>`;
+        }
+    }
 }
 
 // Update Statistics
@@ -173,7 +201,6 @@ function handleSearch(e) {
 }
 
 // View Application Details
-// Attached to window so it can be called from HTML onclick
 window.viewApplication = function (index) {
     const app = filteredApplications[index];
     const modalBody = document.getElementById('modalBody');
@@ -323,17 +350,30 @@ window.viewApplication = function (index) {
 }
 
 // Delete Application
-// Attached to window so it can be called from HTML onclick
 window.deleteApplication = function (firebaseKey) {
     if (confirm('Are you sure you want to delete this application? This cannot be undone.')) {
-        const appRef = ref(db, `applications/${firebaseKey}`);
-        remove(appRef)
-            .then(() => {
-                alert('✅ Application deleted successfully!');
-            })
-            .catch((error) => {
-                alert('Error deleting application: ' + error.message);
-            });
+        if (isFirebaseConfigured()) {
+            // --- ONLINE MODE ---
+            const appRef = ref(db, `applications/${firebaseKey}`);
+            remove(appRef)
+                .then(() => alert('✅ Application deleted successfully!'))
+                .catch((error) => alert('Error deleting application: ' + error.message));
+        } else {
+            // --- OFFLINE MODE ---
+            try {
+                const appToDelete = applications.find(app => app.firebaseKey === firebaseKey);
+                if (appToDelete) {
+                    const localData = JSON.parse(localStorage.getItem('bmcc_applications') || '[]');
+                    const newLocalData = localData.filter(app => app.applicationId !== appToDelete.applicationId);
+                    localStorage.setItem('bmcc_applications', JSON.stringify(newLocalData));
+                    alert('✅ Application deleted locally!');
+                    loadApplications(); // Reload table
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Error deleting local data');
+            }
+        }
     }
 }
 
@@ -390,16 +430,20 @@ function exportToJSON() {
 
 // Clear All Data
 function clearAllData() {
-    if (confirm('⚠️ WARNING: This will permanently delete ALL application data from the Cloud! Are you absolutely sure?')) {
+    if (confirm('⚠️ WARNING: This will permanently delete ALL application data! Are you absolutely sure?')) {
         if (confirm('This action cannot be undone. Continue?')) {
-            const appsRef = ref(db, 'applications');
-            remove(appsRef)
-                .then(() => {
-                    alert('✅ All data cleared successfully!');
-                })
-                .catch((error) => {
-                    alert('Error clearing data: ' + error.message);
-                });
+            if (isFirebaseConfigured()) {
+                // --- ONLINE MODE ---
+                const appsRef = ref(db, 'applications');
+                remove(appsRef)
+                    .then(() => alert('✅ All data cleared successfully!'))
+                    .catch((error) => alert('Error clearing data: ' + error.message));
+            } else {
+                // --- OFFLINE MODE ---
+                localStorage.removeItem('bmcc_applications');
+                alert('✅ All local data cleared successfully!');
+                loadApplications();
+            }
         }
     }
 }
