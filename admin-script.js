@@ -1,8 +1,16 @@
-// Admin Panel JavaScript
+// Admin Panel JavaScript with Firebase
+
+// Firebase Imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { firebaseConfig } from "./firebase-config.js";
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 // Configuration
 const ADMIN_PASSWORD = 'admin123'; // Change this to secure password
-const STORAGE_KEY = 'bmcc_applications';
 
 // Global variables
 let applications = [];
@@ -59,20 +67,33 @@ function showDashboard() {
     loadApplications();
 }
 
-// Load Applications from localStorage
+// Load Applications from Firebase
 function loadApplications() {
-    // Get all applications from localStorage
-    const stored = localStorage.getItem(STORAGE_KEY);
+    const appsRef = ref(db, 'applications');
 
-    if (stored) {
-        applications = JSON.parse(stored);
-    } else {
-        applications = [];
-    }
+    // Real-time listener
+    onValue(appsRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            // Convert object to array and store Firebase key
+            applications = Object.entries(data).map(([key, value]) => ({
+                firebaseKey: key,
+                ...value
+            }));
+        } else {
+            applications = [];
+        }
 
-    filteredApplications = [...applications];
-    updateStatistics();
-    renderTable();
+        // Sort by date (newest first)
+        applications.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+
+        filteredApplications = [...applications];
+        updateStatistics();
+        renderTable();
+    }, (error) => {
+        console.error("Error fetching data:", error);
+        alert("Error fetching data from Firebase: " + error.message);
+    });
 }
 
 // Update Statistics
@@ -83,6 +104,7 @@ function updateStatistics() {
     // Today's applications
     const today = new Date().toDateString();
     const todayCount = applications.filter(app => {
+        if (!app.submittedAt) return false;
         const appDate = new Date(app.submittedAt).toDateString();
         return appDate === today;
     }).length;
@@ -90,9 +112,7 @@ function updateStatistics() {
     // Last updated
     let lastUpdated = 'N/A';
     if (applications.length > 0) {
-        const latest = applications.reduce((a, b) =>
-            new Date(a.submittedAt) > new Date(b.submittedAt) ? a : b
-        );
+        const latest = applications[0]; // Already sorted
         lastUpdated = formatTime(latest.submittedAt);
     }
 
@@ -125,8 +145,8 @@ function renderTable() {
             <td>${app.programPreference1 || 'N/A'}</td>
             <td>${formatDate(app.submittedAt)}</td>
             <td>
-                <button class="action-btn btn-view" onclick="viewApplication(${index})">👁️ View</button>
-                <button class="action-btn btn-delete" onclick="deleteApplication('${app.applicationId}')">🗑️</button>
+                <button class="action-btn btn-view" onclick="window.viewApplication(${index})">👁️ View</button>
+                <button class="action-btn btn-delete" onclick="window.deleteApplication('${app.firebaseKey}')">🗑️</button>
             </td>
         </tr>
     `).join('');
@@ -153,7 +173,8 @@ function handleSearch(e) {
 }
 
 // View Application Details
-function viewApplication(index) {
+// Attached to window so it can be called from HTML onclick
+window.viewApplication = function (index) {
     const app = filteredApplications[index];
     const modalBody = document.getElementById('modalBody');
 
@@ -302,12 +323,17 @@ function viewApplication(index) {
 }
 
 // Delete Application
-function deleteApplication(applicationId) {
+// Attached to window so it can be called from HTML onclick
+window.deleteApplication = function (firebaseKey) {
     if (confirm('Are you sure you want to delete this application? This cannot be undone.')) {
-        applications = applications.filter(app => app.applicationId !== applicationId);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(applications));
-        loadApplications();
-        alert('✅ Application deleted successfully!');
+        const appRef = ref(db, `applications/${firebaseKey}`);
+        remove(appRef)
+            .then(() => {
+                alert('✅ Application deleted successfully!');
+            })
+            .catch((error) => {
+                alert('Error deleting application: ' + error.message);
+            });
     }
 }
 
@@ -364,12 +390,16 @@ function exportToJSON() {
 
 // Clear All Data
 function clearAllData() {
-    if (confirm('⚠️ WARNING: This will permanently delete ALL application data! Are you absolutely sure?')) {
+    if (confirm('⚠️ WARNING: This will permanently delete ALL application data from the Cloud! Are you absolutely sure?')) {
         if (confirm('This action cannot be undone. Continue?')) {
-            localStorage.removeItem(STORAGE_KEY);
-            applications = [];
-            loadApplications();
-            alert('✅ All data cleared successfully!');
+            const appsRef = ref(db, 'applications');
+            remove(appsRef)
+                .then(() => {
+                    alert('✅ All data cleared successfully!');
+                })
+                .catch((error) => {
+                    alert('Error clearing data: ' + error.message);
+                });
         }
     }
 }

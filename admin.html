@@ -135,13 +135,152 @@
                 </div>
                 <div class="modal-footer">
                     <button id="downloadPDF" class="btn-primary">📥 Download PDF</button>
-                    <button id="closeModalBtn" class="btn-secondary">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+                    <!DOCTYPE html>
+                    <html lang="en">
 
-    <script src="admin-script.js"></script>
-</body>
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Admin Panel - BMCC Admission Forms</title>
+                        <link rel="preconnect" href="https://fonts.googleapis.com">
+                        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                        <link
+                            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
+                            rel="stylesheet">
+                        <link rel="stylesheet" href="admin-style.css">
+                    </head>
 
-</html>
+                    <body>
+                        <!-- Login Screen -->
+                        <div id="loginScreen" class="login-container">
+                            <div class="login-box">
+                                <div class="login-header">
+                                    <img src="logo.jpg" alt="BMCC Logo" class="login-logo">
+                                    <h1>Admin Panel</h1>
+                                    <p>BMCC Admission Forms Management</p>
+                                </div>
+                                <form id="loginForm" class="login-form">
+                                    <div class="form-group">
+                                        <label for="adminPassword">Password</label>
+                                        <input type="password" id="adminPassword" placeholder="Enter admin password"
+                                            required>
+                                    </div>
+                                    <button type="submit" class="btn-login">Login</button>
+                                    <p class="login-hint">Default password: <code>admin123</code></p>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Admin Dashboard -->
+                        <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+                            <!-- Header -->
+                            <header class="admin-header">
+                                <div class="header-left">
+                                    <img src="logo.jpg" alt="BMCC Logo" class="header-logo">
+                                    <div class="header-text">
+                                        <h1>BMCC Admission Panel</h1>
+                                        <p>Manage & View Applications</p>
+                                    </div>
+                                </div>
+                                <div class="header-right">
+                                    <button id="refreshBtn" class="btn-icon" title="Refresh Data">🔄</button>
+                                    <button id="logoutBtn" class="btn-secondary">Logout</button>
+                                </div>
+                            </header>
+
+                            <!-- Statistics Cards -->
+                            <div class="stats-container">
+                                <div class="stat-card">
+                                    <div class="stat-icon">📝</div>
+                                    <div class="stat-info">
+                                        <h3 id="totalApplications">0</h3>
+                                        <p>Total Applications</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">✅</div>
+                                    <div class="stat-info">
+                                        <h3 id="completedApplications">0</h3>
+                                        <p>Completed Forms</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">📊</div>
+                                    <div class="stat-info">
+                                        <h3 id="todayApplications">0</h3>
+                                        <p>Today's Submissions</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">📅</div>
+                                    <div class="stat-info">
+                                        <h3 id="lastUpdated">N/A</h3>
+                                        <p>Last Updated</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <div class="controls-container">
+                                <div class="search-box">
+                                    <input type="text" id="searchInput" placeholder="Search by name, ID, email..."
+                                        class="search-input">
+                                </div>
+                                <div class="control-buttons">
+                                    <button id="exportCSV" class="btn-primary">📥 Export CSV</button>
+                                    <button id="exportJSON" class="btn-primary">📥 Export JSON</button>
+                                    <button id="clearAllData" class="btn-danger">🗑️ Clear All Data</button>
+                                </div>
+                            </div>
+
+                            <!-- Applications Table -->
+                            <div class="table-container">
+                                <div class="table-header">
+                                    <h2>Submitted Applications</h2>
+                                    <span id="resultCount" class="result-count">0 applications</span>
+                                </div>
+                                <div class="table-wrapper">
+                                    <table id="applicationsTable" class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Application ID</th>
+                                                <th>Full Name</th>
+                                                <th>Email</th>
+                                                <th>Mobile</th>
+                                                <th>Program</th>
+                                                <th>Submitted On</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="applicationsTableBody">
+                                            <tr>
+                                                <td colspan="8" class="no-data">No applications found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Application Details Modal -->
+                            <div id="detailsModal" class="modal">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2>Application Details</h2>
+                                        <button class="modal-close" id="closeModal">&times;</button>
+                                    </div>
+                                    <div class="modal-body" id="modalBody">
+                                        <!-- Details will be loaded here -->
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="downloadPDF" class="btn-primary">📥 Download PDF</button>
+                                        <button id="closeModalBtn" class="btn-secondary">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script type="module" src="admin-script.js"></script>
+                    </body>
+
+                    </html>

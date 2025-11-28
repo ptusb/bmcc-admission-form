@@ -1,4 +1,15 @@
 // ===========================
+// Firebase Imports & Init
+// ===========================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { firebaseConfig } from "./firebase-config.js";
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// ===========================
 // DOM Elements
 // ===========================
 const form = document.getElementById('admissionForm');
@@ -317,21 +328,44 @@ function handleFormSubmit(e) {
     submitButton.classList.add('loading');
     submitButton.disabled = true;
 
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
-        submitButton.textContent = originalText;
-        submitButton.classList.remove('loading');
-        submitButton.disabled = false;
+    // Collect Form Data
+    const formData = new FormData(form);
+    const data = {};
+    for (let [key, value] of formData.entries()) {
+        if (!(value instanceof File)) {
+            data[key] = value;
+        }
+    }
 
-        // Generate application ID
-        const appId = generateApplicationId();
+    // Generate App ID
+    const appId = generateApplicationId();
+    data.applicationId = appId;
+    data.submittedAt = new Date().toISOString();
+    data.status = 'completed';
 
-        // Show success modal
-        showSuccessModal(appId);
+    // Save to Firebase
+    const newAppRef = push(ref(db, 'applications'));
+    set(newAppRef, data)
+        .then(() => {
+            submitButton.textContent = originalText;
+            submitButton.classList.remove('loading');
+            submitButton.disabled = false;
 
-        // Log form data (for demonstration)
-        logFormData();
-    }, 2000);
+            // Clear local storage
+            localStorage.removeItem('admissionFormProgress');
+
+            // Show success modal
+            showSuccessModal(appId);
+
+            console.log('Application submitted to Firebase:', appId);
+        })
+        .catch((error) => {
+            console.error('Error submitting form:', error);
+            showNotification('Error submitting form: ' + error.message, 'error');
+            submitButton.textContent = originalText;
+            submitButton.classList.remove('loading');
+            submitButton.disabled = false;
+        });
 }
 
 function generateApplicationId() {
