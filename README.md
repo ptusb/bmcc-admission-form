@@ -2,8 +2,8 @@
 
 > **A modern, full-stack web application for streamlining the student admission process**
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://loquacious-sable-61bcf1.netlify.app/)
-[![Admin Panel](https://img.shields.io/badge/Admin-Panel-green?style=for-the-badge)](https://loquacious-sable-61bcf1.netlify.app/admin.html)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://bmccadmissionform2024-25.netlify.app/)
+[![Admin Panel](https://img.shields.io/badge/Admin-Panel-green?style=for-the-badge)](https://bmccadmissionform2024-25.netlify.app/admin.html)
 [![Status](https://img.shields.io/badge/Status-Online-success?style=for-the-badge)]()
 
 **Brihan Maharashtra College of Commerce (BMCC)** - Deccan Education Society, Pune
@@ -76,7 +76,7 @@ The BMCC Admission Form is a comprehensive web-based solution designed to digiti
 - **Session Management**: Secure login/logout
 
 #### Admin Panel Access
-- **URL**: [https://loquacious-sable-61bcf1.netlify.app/admin.html](https://loquacious-sable-61bcf1.netlify.app/admin.html)
+- **URL**: [https://bmccadmissionform2024-25.netlify.app/admin.html](https://bmccadmissionform2024-25.netlify.app/admin.html)
 - **Password**: `admin123` (Change in production!)
 
 ### 🌐 Hybrid Mode
@@ -102,12 +102,12 @@ The application intelligently switches between two modes:
 ## 🚀 Live Demo
 
 ### Application Form
-**URL**: [https://loquacious-sable-61bcf1.netlify.app/](https://loquacious-sable-61bcf1.netlify.app/)
+**URL**: [https://bmccadmissionform2024-25.netlify.app/](https://bmccadmissionform2024-25.netlify.app/)
 
 Try the live form and submit a test application!
 
 ### Admin Panel
-**URL**: [https://loquacious-sable-61bcf1.netlify.app/admin.html](https://loquacious-sable-61bcf1.netlify.app/admin.html)  
+**URL**: [https://bmccadmissionform2024-25.netlify.app/admin.html](https://bmccadmissionform2024-25.netlify.app/admin.html)  
 **Password**: `admin123`
 
 View and manage submitted applications in real-time.
@@ -395,6 +395,6 @@ For questions or support:
 
 ⭐ **Star this repository if you found it helpful!**
 
-[Live Demo](https://loquacious-sable-61bcf1.netlify.app/) • [Admin Panel](https://loquacious-sable-61bcf1.netlify.app/admin.html) • [Documentation](./OBSIDIAN_PRESENTATION/)
+[Live Demo](https://bmccadmissionform2024-25.netlify.app/) • [Admin Panel](https://bmccadmissionform2024-25.netlify.app/admin.html) • [Documentation](./OBSIDIAN_PRESENTATION/)
 
 </div>
