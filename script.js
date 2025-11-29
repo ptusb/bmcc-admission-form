@@ -1,4 +1,14 @@
 // ===========================
+// Firebase Configuration
+// ===========================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { firebaseConfig, isFirebaseConfigured } from "./firebase-config.js";
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// ===========================
 // DOM Elements
 // ===========================
 const form = document.getElementById('admissionForm');
@@ -13,7 +23,7 @@ let currentStep = 1;
 // ===========================
 // Initialization
 // ===========================
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeEventListeners();
     initializeAutoCalculations();
     initializeFileUploadLabels();
@@ -50,17 +60,17 @@ function initializeAutoCalculations() {
     // Age calculation from DOB
     const dobInput = document.getElementById('dob');
     const ageInput = document.getElementById('age');
-    
-    dobInput.addEventListener('change', function() {
+
+    dobInput.addEventListener('change', function () {
         const dob = new Date(this.value);
         const today = new Date();
         let age = today.getFullYear() - dob.getFullYear();
         const monthDiff = today.getMonth() - dob.getMonth();
-        
+
         if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
             age--;
         }
-        
+
         ageInput.value = age >= 0 ? age : '';
     });
 
@@ -68,11 +78,11 @@ function initializeAutoCalculations() {
     const sscObtained = document.getElementById('ssc_marks_obtained');
     const sscTotal = document.getElementById('ssc_total_marks');
     const sscPercentage = document.getElementById('ssc_percentage');
-    
+
     function calculateSSCPercentage() {
         const obtained = parseFloat(sscObtained.value) || 0;
         const total = parseFloat(sscTotal.value) || 0;
-        
+
         if (total > 0) {
             const percentage = (obtained / total) * 100;
             sscPercentage.value = percentage.toFixed(2);
@@ -80,7 +90,7 @@ function initializeAutoCalculations() {
             sscPercentage.value = '';
         }
     }
-    
+
     sscObtained.addEventListener('input', calculateSSCPercentage);
     sscTotal.addEventListener('input', calculateSSCPercentage);
 
@@ -88,11 +98,11 @@ function initializeAutoCalculations() {
     const hscObtained = document.getElementById('hsc_marks_obtained');
     const hscTotal = document.getElementById('hsc_total_marks');
     const hscPercentage = document.getElementById('hsc_percentage');
-    
+
     function calculateHSCPercentage() {
         const obtained = parseFloat(hscObtained.value) || 0;
         const total = parseFloat(hscTotal.value) || 0;
-        
+
         if (total > 0) {
             const percentage = (obtained / total) * 100;
             hscPercentage.value = percentage.toFixed(2);
@@ -100,7 +110,7 @@ function initializeAutoCalculations() {
             hscPercentage.value = '';
         }
     }
-    
+
     hscObtained.addEventListener('input', calculateHSCPercentage);
     hscTotal.addEventListener('input', calculateHSCPercentage);
 }
@@ -110,10 +120,10 @@ function initializeAutoCalculations() {
 // ===========================
 function initializeFileUploadLabels() {
     const fileInputs = document.querySelectorAll('input[type="file"]');
-    
+
     fileInputs.forEach(input => {
         const label = input.nextElementSibling;
-        
+
         if (label && label.classList.contains('file-upload-label')) {
             // Drag and drop events
             label.addEventListener('dragover', (e) => {
@@ -121,25 +131,25 @@ function initializeFileUploadLabels() {
                 label.style.borderColor = 'var(--primary-color)';
                 label.style.background = 'rgba(99, 102, 241, 0.2)';
             });
-            
+
             label.addEventListener('dragleave', (e) => {
                 e.preventDefault();
                 label.style.borderColor = '';
                 label.style.background = '';
             });
-            
+
             label.addEventListener('drop', (e) => {
                 e.preventDefault();
                 label.style.borderColor = '';
                 label.style.background = '';
-                
+
                 const files = e.dataTransfer.files;
                 if (files.length > 0) {
                     input.files = files;
                     handleFileChange.call(input);
                 }
             });
-            
+
             // Click to select file
             label.addEventListener('click', () => {
                 input.click();
@@ -151,12 +161,12 @@ function initializeFileUploadLabels() {
 function handleFileChange() {
     const label = this.nextElementSibling;
     const fileText = label.querySelector('.file-text');
-    
+
     if (this.files.length > 0) {
         const fileName = this.files[0].name;
         const maxLength = 30;
-        const displayName = fileName.length > maxLength 
-            ? fileName.substring(0, maxLength - 3) + '...' 
+        const displayName = fileName.length > maxLength
+            ? fileName.substring(0, maxLength - 3) + '...'
             : fileName;
         fileText.textContent = displayName;
     } else {
@@ -185,17 +195,17 @@ function moveToStep(stepNumber) {
     // Hide current step
     formSteps[currentStep - 1].classList.remove('active');
     progressSteps[currentStep - 1].classList.remove('active');
-    
+
     // Mark completed steps
     if (stepNumber > currentStep) {
         progressSteps[currentStep - 1].classList.add('completed');
     }
-    
+
     // Show new step
     currentStep = stepNumber;
     formSteps[currentStep - 1].classList.add('active');
     progressSteps[currentStep - 1].classList.add('active');
-    
+
     // Scroll to top
     window.scrollTo({
         top: 0,
@@ -215,15 +225,15 @@ function validateCurrentStep() {
     requiredFields.forEach(field => {
         // Remove previous error styling
         field.style.borderColor = '';
-        
+
         if (!field.checkValidity()) {
             isValid = false;
             field.style.borderColor = 'var(--error-color)';
-            
+
             if (!firstInvalidField) {
                 firstInvalidField = field;
             }
-            
+
             // Show validation message
             if (!field.validity.valid) {
                 showFieldError(field);
@@ -234,7 +244,7 @@ function validateCurrentStep() {
     if (!isValid && firstInvalidField) {
         firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
         firstInvalidField.focus();
-        
+
         showNotification('Please fill in all required fields correctly', 'error');
     }
 
@@ -244,7 +254,7 @@ function validateCurrentStep() {
 function showFieldError(field) {
     // Create or update error message
     let errorMessage = field.parentElement.querySelector('.error-message');
-    
+
     if (!errorMessage) {
         errorMessage = document.createElement('div');
         errorMessage.className = 'error-message';
@@ -253,7 +263,7 @@ function showFieldError(field) {
         errorMessage.style.marginTop = '0.25rem';
         field.parentElement.appendChild(errorMessage);
     }
-    
+
     if (field.validity.valueMissing) {
         errorMessage.textContent = 'This field is required';
     } else if (field.validity.typeMismatch) {
@@ -263,7 +273,7 @@ function showFieldError(field) {
     } else {
         errorMessage.textContent = 'Invalid input';
     }
-    
+
     // Add input listener to remove error on correction
     field.addEventListener('input', function clearError() {
         field.style.borderColor = '';
@@ -279,11 +289,11 @@ function showFieldError(field) {
 // ===========================
 function handleFormSubmit(e) {
     e.preventDefault();
-    
+
     if (!validateCurrentStep()) {
         return;
     }
-    
+
     // Check declaration checkbox
     const declaration = document.getElementById('declaration');
     if (!declaration.checked) {
@@ -291,29 +301,80 @@ function handleFormSubmit(e) {
         declaration.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
     }
-    
+
     // Show loading state
     const submitButton = form.querySelector('.btn-submit');
     const originalText = submitButton.textContent;
     submitButton.textContent = 'Submitting...';
     submitButton.classList.add('loading');
     submitButton.disabled = true;
-    
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
+
+    // Collect Form Data
+    const formData = new FormData(form);
+    const data = {};
+    for (let [key, value] of formData.entries()) {
+        if (!(value instanceof File)) {
+            data[key] = value;
+        }
+    }
+
+    // Generate Application ID
+    const appId = generateApplicationId();
+    data.applicationId = appId;
+    data.submittedAt = new Date().toISOString();
+    data.status = 'completed';
+
+    // HYBRID MODE: Auto-detect Firebase configuration
+    if (isFirebaseConfigured()) {
+        // --- ONLINE MODE: Save to Firebase Cloud ---
+        console.log('🌐 Saving to Firebase Cloud...');
+        const newAppRef = push(ref(db, 'applications'));
+        set(newAppRef, data)
+            .then(() => {
+                finishSubmission(appId, 'online');
+            })
+            .catch((error) => {
+                console.error('❌ Firebase error:', error);
+                showNotification('Error: ' + error.message, 'error');
+                resetButton();
+            });
+    } else {
+        // --- OFFLINE MODE: Save to localStorage ---
+        console.log('💾 Saving to Local Storage...');
+        try {
+            const existingApps = JSON.parse(localStorage.getItem('bmcc_applications') || '[]');
+            existingApps.push(data);
+            localStorage.setItem('bmcc_applications', JSON.stringify(existingApps));
+
+            setTimeout(() => {
+                finishSubmission(appId, 'offline');
+            }, 1500);
+        } catch (error) {
+            console.error('❌ Storage error:', error);
+            showNotification('Error saving application', 'error');
+            resetButton();
+        }
+    }
+
+    function finishSubmission(id, mode) {
+        resetButton();
+        localStorage.removeItem('admissionFormProgress');
+        showSuccessModal(id);
+
+        if (mode === 'online') {
+            console.log('✅ Saved to Firebase Cloud!');
+            showNotification('Application submitted to cloud! 🌐', 'success');
+        } else {
+            console.log('✅ Saved locally!');
+            showNotification('Application saved on this device 💾', 'info');
+        }
+    }
+
+    function resetButton() {
         submitButton.textContent = originalText;
         submitButton.classList.remove('loading');
         submitButton.disabled = false;
-        
-        // Generate application ID
-        const appId = generateApplicationId();
-        
-        // Show success modal
-        showSuccessModal(appId);
-        
-        // Log form data (for demonstration)
-        logFormData();
-    }, 2000);
+    }
 }
 
 function generateApplicationId() {
@@ -325,9 +386,9 @@ function generateApplicationId() {
 function showSuccessModal(appId) {
     const appIdElement = document.getElementById('appId');
     appIdElement.textContent = appId;
-    
+
     modal.classList.add('show');
-    
+
     // Store application ID
     localStorage.setItem('lastApplicationId', appId);
 }
@@ -335,7 +396,7 @@ function showSuccessModal(appId) {
 function logFormData() {
     const formData = new FormData(form);
     const data = {};
-    
+
     for (let [key, value] of formData.entries()) {
         if (value instanceof File) {
             data[key] = value.name;
@@ -343,7 +404,7 @@ function logFormData() {
             data[key] = value;
         }
     }
-    
+
     console.log('Form Data:', data);
     console.log('Form submitted successfully!');
 }
@@ -357,12 +418,12 @@ function showNotification(message, type = 'info') {
     if (existingNotification) {
         existingNotification.remove();
     }
-    
+
     // Create notification element
     const notification = document.createElement('div');
     notification.className = 'notification';
     notification.textContent = message;
-    
+
     // Style based on type
     const colors = {
         success: 'var(--success-color)',
@@ -370,7 +431,7 @@ function showNotification(message, type = 'info') {
         warning: 'var(--warning-color)',
         info: 'var(--primary-color)'
     };
-    
+
     notification.style.cssText = `
         position: fixed;
         top: 20px;
@@ -385,7 +446,7 @@ function showNotification(message, type = 'info') {
         max-width: 400px;
         font-weight: 500;
     `;
-    
+
     // Add animation
     const style = document.createElement('style');
     style.textContent = `
@@ -401,9 +462,9 @@ function showNotification(message, type = 'info') {
         }
     `;
     document.head.appendChild(style);
-    
+
     document.body.appendChild(notification);
-    
+
     // Auto remove after 5 seconds
     setTimeout(() => {
         notification.style.animation = 'slideInRight 0.3s ease reverse';
@@ -416,10 +477,10 @@ function showNotification(message, type = 'info') {
 // ===========================
 
 // Prevent form submission on Enter key (except in textarea)
-form.addEventListener('keydown', function(e) {
+form.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
         e.preventDefault();
-        
+
         // Trigger next step instead
         const nextButton = formSteps[currentStep - 1].querySelector('.next-step');
         if (nextButton) {
@@ -432,13 +493,13 @@ form.addEventListener('keydown', function(e) {
 function saveFormProgress() {
     const formData = new FormData(form);
     const data = {};
-    
+
     for (let [key, value] of formData.entries()) {
         if (!(value instanceof File)) {
             data[key] = value;
         }
     }
-    
+
     localStorage.setItem('admissionFormProgress', JSON.stringify(data));
     console.log('Form progress saved');
 }
@@ -446,18 +507,18 @@ function saveFormProgress() {
 // Load form progress from localStorage
 function loadFormProgress() {
     const saved = localStorage.getItem('admissionFormProgress');
-    
+
     if (saved) {
         try {
             const data = JSON.parse(saved);
-            
+
             Object.keys(data).forEach(key => {
                 const field = form.elements[key];
                 if (field && !(field instanceof File)) {
                     field.value = data[key];
                 }
             });
-            
+
             console.log('Form progress loaded');
             showNotification('Previous form data has been restored', 'info');
         } catch (e) {
@@ -470,17 +531,17 @@ function loadFormProgress() {
 setInterval(saveFormProgress, 30000);
 
 // Prompt user before leaving if form is partially filled
-window.addEventListener('beforeunload', function(e) {
+window.addEventListener('beforeunload', function (e) {
     const formData = new FormData(form);
     let hasData = false;
-    
+
     for (let [key, value] of formData.entries()) {
         if (value && !(value instanceof File && value.size === 0)) {
             hasData = true;
             break;
         }
     }
-    
+
     if (hasData && currentStep > 1) {
         e.preventDefault();
         e.returnValue = '';
@@ -499,10 +560,10 @@ window.addEventListener('beforeunload', function(e) {
 // Format mobile number inputs
 const mobileInputs = document.querySelectorAll('input[type="tel"]');
 mobileInputs.forEach(input => {
-    input.addEventListener('input', function() {
+    input.addEventListener('input', function () {
         // Remove non-numeric characters
         this.value = this.value.replace(/[^0-9]/g, '');
-        
+
         // Limit to 10 digits for mobile numbers
         if (this.name.includes('mobile')) {
             this.value = this.value.slice(0, 10);
@@ -513,7 +574,7 @@ mobileInputs.forEach(input => {
 // Format IFSC code
 const ifscInput = document.getElementById('ifsc_code');
 if (ifscInput) {
-    ifscInput.addEventListener('input', function() {
+    ifscInput.addEventListener('input', function () {
         this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
         this.value = this.value.slice(0, 11);
     });
@@ -522,7 +583,7 @@ if (ifscInput) {
 // Format pincode
 const pincodeInput = document.getElementById('pincode');
 if (pincodeInput) {
-    pincodeInput.addEventListener('input', function() {
+    pincodeInput.addEventListener('input', function () {
         this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6);
     });
 }
@@ -530,7 +591,7 @@ if (pincodeInput) {
 // ===========================
 // Keyboard Navigation
 // ===========================
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     // Alt + Right Arrow = Next Step
     if (e.altKey && e.key === 'ArrowRight') {
         e.preventDefault();
@@ -539,7 +600,7 @@ document.addEventListener('keydown', function(e) {
             nextButton.click();
         }
     }
-    
+
     // Alt + Left Arrow = Previous Step
     if (e.altKey && e.key === 'ArrowLeft') {
         e.preventDefault();
@@ -548,7 +609,7 @@ document.addEventListener('keydown', function(e) {
             prevButton.click();
         }
     }
-    
+
     // Escape = Close modal
     if (e.key === 'Escape') {
         if (modal.classList.contains('show')) {
