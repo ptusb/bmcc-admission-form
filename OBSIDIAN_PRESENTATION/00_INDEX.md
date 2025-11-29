@@ -70,8 +70,8 @@
 
 ## 🔗 Quick Links
 
-- **Live Form:** https://loquacious-sable-61bcf1.netlify.app/
-- **Admin Panel:** https://loquacious-sable-61bcf1.netlify.app/admin.html
+- **Live Form:** https://bmccadmissionform2024-25.netlify.app/
+- **Admin Panel:** https://bmccadmissionform2024-25.netlify.app/admin.html
 - **GitHub Repository:** https://github.com/ptusb/bmcc-admission-form
 - **Firebase Console:** https://console.firebase.google.com/
 

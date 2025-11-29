@@ -83,7 +83,7 @@ Chrome DevTools - Debugging & testing
 ## 🌐 Live Demo URLs
 
 ### Public Form
-**URL:** https://loquacious-sable-61bcf1.netlify.app/
+**URL:** https://bmccadmissionform2024-25.netlify.app/
 
 **Features:**
 - Multi-step form (5 sections)
@@ -100,7 +100,7 @@ Chrome DevTools - Debugging & testing
 ---
 
 ### Admin Panel
-**URL:** https://loquacious-sable-61bcf1.netlify.app/admin.html
+**URL:** https://bmccadmissionform2024-25.netlify.app/admin.html
 
 **Credentials:**
 ```
