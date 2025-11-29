@@ -765,6 +765,22 @@ body {
     border-radius: var(--radius-md);
     margin: var(--spacing-md) 0;
     border: 1px solid var(--border-color);
+}
+
+.application-id strong {
+    color: var(--primary-color);
+    font-size: 1.125rem;
+    font-family: monospace;
+}
+
+/* ===========================
+   Responsive Design
+   =========================== */
+@media (max-width: 768px) {
+    .header-text h1 {
+        font-size: 1.25rem;
+    }
+
     .college-logo {
         width: 60px;
         height: 60px;
